@@ -17,12 +17,14 @@ Node<T>::Node(T value)
 template <class T>
 T Node<T>::getValue()
 {
+	std::cout << "getvalue" << std::endl;
 	if(isEnd)
 	{
 		printf("Attempt to get value from end node!\n");
 		T errorValue;
 		return errorValue;
 	}
+	
 	return value;
 }
 

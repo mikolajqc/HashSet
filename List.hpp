@@ -50,13 +50,29 @@ bool List<T>::insert(T value)
 template <class T>
 bool List<T>::erase(T value)
 {
-	return true;
+	if(empty()) return false;
+	
+	List<T>::Iterator i = begin();
+	
+	for(;i!=end(); ++i)
+	{
+		if(*i == value)
+		{
+			if(i == begin())
+			{
+				headNode = headNode->nextNode;
+				headNode->previousNode = nullptr;
+			}
+			else
+			{
+				(&i)->previousNode->nextNode = (&i)->nextNode;
+				(&i)->nextNode->previousNode = (&i)->previousNode;
+			}
+			delete(&i);
+			--size;
+			return true;
+		}
+	}
+	
+	return false;
 }
-
-/*
-template<class T>
-Iterator List<T>::begin()
-{
-	return Iterator(this->headNode, this);
-}
-*/

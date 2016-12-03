@@ -29,17 +29,47 @@ public:
 			return node->getValue();
 		}
 		
+		Node<T>* operator&()
+		{
+			return node;
+		}
+		
 		Iterator& operator++()
 		{
 			node = node->nextNode;
+			std::cout << "++" << std::endl; 
 			return *this;
 		}
 		
 		Iterator operator++(int)
 		{
 			Iterator temp = *this;
-			this->node = this->node->next;
+			this->node = this->node->nextNode;
 			return temp;
+		}
+		
+		Iterator& operator--()
+		{
+			node = node->previousNode;
+			std::cout << "--" << std::endl; 
+			return *this;
+		}
+		
+		Iterator operator--(int)
+		{
+			Iterator temp = *this;
+			this->node = this->node->previousNode;
+			return temp;
+		}
+		
+		bool operator==(const Iterator& a) const
+		{
+			return list == a.list && node == a.node;
+		}
+		
+		bool operator!=(const Iterator& a) const
+		{
+			return list != a.list || node != a.node;
 		}
 	
 	private:
@@ -60,8 +90,6 @@ private:
 	Node<T>* headNode; //pointers are equal if the list is empty
 	Node<T>* endNode; // necessary?
 	size_t size;
-	
-	
 	
 	
 };
