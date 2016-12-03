@@ -29,7 +29,7 @@ size_t List<T>::getSize()
 template <class T>
 bool List<T>::insert(T value)
 {
-	Node<T>* newNode = new Node<T>();
+	Node<T>* newNode = new Node<T>(value);
 	
 	if(empty())
 	{
@@ -43,6 +43,20 @@ bool List<T>::insert(T value)
 		newNode->previousNode = endNode->previousNode;
 		endNode->previousNode = newNode;
 	}
+	++size;
 	return true;
 }
-//	bool erase(T value);
+
+template <class T>
+bool List<T>::erase(T value)
+{
+	return true;
+}
+
+/*
+template<class T>
+Iterator List<T>::begin()
+{
+	return Iterator(this->headNode, this);
+}
+*/

@@ -8,17 +8,34 @@ Node<T>::Node()
 }
 
 template <class T>
-Node<T>::Node(T value, Node* previousNode, Node* nextNode)
+Node<T>::Node(T value)
 {
 	this->value = value;
-	this->previousNode = previousNode;
-	this->nextNode = nextNode;
 	isEnd = false;
 }
 
 template <class T>
-T Node<T>getValue()
+T Node<T>::getValue()
 {
+	if(isEnd)
+	{
+		printf("Attempt to get value from end node!\n");
+		T errorValue;
+		return errorValue;
+	}
 	return value;
 }
-//bool setValue(T value);
+
+template <class T>
+bool Node<T>::setValue(T value)
+{
+	if(isEnd)
+	{
+		printf("Attempt to set value in end node!\n");
+		return false;
+	}
+	
+	this->value = value;
+	
+	return true;
+}
