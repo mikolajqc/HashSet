@@ -51,7 +51,7 @@ public:
 		Iterator& operator--()
 		{
 			node = node->previousNode;
-			std::cout << "--" << std::endl; 
+			//std::cout << "--" << std::endl; 
 			return *this;
 		}
 		
@@ -84,6 +84,28 @@ public:
 	Iterator end()
 	{
 		return Iterator(this->endNode, this);
+	}
+	
+	bool erase(Iterator i)
+	{
+		if(empty() || i == end())
+		{
+			std::cout << "List is empty or attempt to delete end node!" << std::endl;
+			return false;
+		}
+		if(i ==begin())
+		{
+			headNode = headNode->nextNode;
+			headNode->previousNode = nullptr;
+		}
+		else
+		{
+			(&i)->nextNode->previousNode = (&i)->previousNode;
+			(&i)->previousNode->nextNode = (&i)->nextNode;
+		}
+		delete(&i);
+		--size;
+		return true;
 	}
 
 private:

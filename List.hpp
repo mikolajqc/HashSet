@@ -42,6 +42,7 @@ bool List<T>::insert(T value)
 		endNode->previousNode->nextNode = newNode;
 		newNode->previousNode = endNode->previousNode;
 		endNode->previousNode = newNode;
+		newNode->nextNode = endNode; //new feature
 	}
 	++size;
 	return true;
@@ -52,9 +53,11 @@ bool List<T>::erase(T value)
 {
 	if(empty()) return false;
 	
+	std::cout << "Deleting..." << std::endl;
 	
 	for(List<T>::Iterator i = begin();i!=end(); ++i)
 	{
+		
 		if(*i == value)
 		{
 			if(i == begin())
@@ -65,8 +68,11 @@ bool List<T>::erase(T value)
 			else
 			{
 				(&i)->previousNode->nextNode = (&i)->nextNode;
-				(&i)->nextNode->previousNode = (&i)->previousNode;
+				
+				(&i)->nextNode->previousNode = (&i)->previousNode;///jebie sie
+				
 			}
+			
 			delete(&i);
 			--size;
 			return true;
@@ -81,10 +87,12 @@ bool List<T>::clean()
 {
 	if(empty()) return false;
 	
-	for(List<T>::Iterator i = begin();i!=--end();++i)
-	{
-		erase(*i); //do poprawki erase powinien przjmowac iterator
-	}
+	List<T>::Iterator i = begin();
 	
+	while(i!=end())
+	{
+		List<T>::Iterator temp = i++;
+		erase(temp); //do poprawki erase powinien przjmowac iterator
+	}
 	return true;
 }

@@ -7,27 +7,19 @@ int main()
 {
 	List<std::string> testList;
 	
-	cout << testList.getSize() << endl;
-	testList.insert("eloziom");
-	
-	cout << testList.getSize() << endl;
-	
-	testList.insert("eloziom1");
-	
-	cout << testList.getSize() << endl;
-	testList.insert("eloziom2");
-	
-	cout << testList.getSize() << endl;
-	
-	
-	cout << *(testList.begin()++) << endl;
-	
-	testList.erase("eloziom2");
-	cout << *(++testList.begin()) << endl;
-	
-	cout << testList.getSize() << endl;
-	
-	//testList.clean();
+	for(unsigned int i = 0; i < 2;++i )
+	{
+		testList.insert("eloziom");
+		testList.insert("eloziom1");
+		testList.insert("eloziom2");
+		
+		cout << testList.getSize() << endl;
+		testList.erase(testList.end());
+		cout << testList.getSize() << endl;
+		
+		testList.clean();
+		cout << testList.getSize() << endl;
+	}
 	
 	return 0;
 }
