@@ -2,6 +2,7 @@
 #define LIST_H
 
 #include "Node.h"
+#include <vector>
 
 template <class T>
 class List
@@ -106,6 +107,22 @@ public:
 		delete(&i);
 		--size;
 		return true;
+	}
+
+	bool find(T value, std::vector<Iterator>& iterators)
+	{
+		bool result = false;
+		Iterator i = begin();
+		while(i!=end())
+		{
+			Iterator temp = i++;
+			if(*temp == value)
+			{
+				result = true;
+				iterators.push_back(temp);
+			}
+		}
+		return result;
 	}
 
 private:

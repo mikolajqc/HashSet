@@ -10,11 +10,13 @@ int main()
 	for(unsigned int i = 0; i < 2;++i )
 	{
 		testList.insert("eloziom");
-		testList.insert("eloziom1");
-		testList.insert("eloziom2");
+		testList.insert("eloziom");
+		testList.insert("eloziom");
 		
 		cout << testList.getSize() << endl;
-		testList.erase(testList.end());
+		//testList.erase("eloziom1");
+		//testList.erase("eloziom2");
+		testList.erase("eloziom");
 		cout << testList.getSize() << endl;
 		
 		testList.clean();

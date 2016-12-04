@@ -51,35 +51,15 @@ bool List<T>::insert(T value)
 template <class T>
 bool List<T>::erase(T value)
 {
-	if(empty()) return false;
+	std::vector<List<T>::Iterator> iterators;
 	
-	std::cout << "Deleting..." << std::endl;
+	if (!find(value, iterators)) return false;
 	
-	for(List<T>::Iterator i = begin();i!=end(); ++i)
+	for(unsigned int i = 0; i < iterators.size(); ++i)
 	{
-		
-		if(*i == value)
-		{
-			if(i == begin())
-			{
-				headNode = headNode->nextNode;
-				headNode->previousNode = nullptr;
-			}
-			else
-			{
-				(&i)->previousNode->nextNode = (&i)->nextNode;
-				
-				(&i)->nextNode->previousNode = (&i)->previousNode;///jebie sie
-				
-			}
-			
-			delete(&i);
-			--size;
-			return true;
-		}
+		erase(iterators[i]);
 	}
-	
-	return false;
+	return true;
 }
 
 template <class T>
