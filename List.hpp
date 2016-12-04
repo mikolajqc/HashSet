@@ -52,9 +52,8 @@ bool List<T>::erase(T value)
 {
 	if(empty()) return false;
 	
-	List<T>::Iterator i = begin();
 	
-	for(;i!=end(); ++i)
+	for(List<T>::Iterator i = begin();i!=end(); ++i)
 	{
 		if(*i == value)
 		{
@@ -75,4 +74,17 @@ bool List<T>::erase(T value)
 	}
 	
 	return false;
+}
+
+template <class T>
+bool List<T>::clean()
+{
+	if(empty()) return false;
+	
+	for(List<T>::Iterator i = begin();i!=--end();++i)
+	{
+		erase(*i); //do poprawki erase powinien przjmowac iterator
+	}
+	
+	return true;
 }

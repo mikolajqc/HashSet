@@ -22,10 +22,12 @@ int main()
 	
 	cout << *(testList.begin()++) << endl;
 	
-	testList.erase("eloziom1");
+	testList.erase("eloziom2");
 	cout << *(++testList.begin()) << endl;
 	
 	cout << testList.getSize() << endl;
+	
+	//testList.clean();
 	
 	return 0;
 }
