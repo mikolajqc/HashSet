@@ -9,8 +9,8 @@ List<T>::List()
 template <class T>
 List<T>::~List()
 {
-	//erasing
-	//delete headNode; //temporary !!!!
+	clean();
+	delete headNode;
 }
 
 template <class T>
