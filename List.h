@@ -37,8 +37,7 @@ public:
 		
 		Iterator& operator++()
 		{
-			node = node->nextNode;
-			std::cout << "++" << std::endl; 
+			node = node->nextNode; 
 			return *this;
 		}
 		
@@ -52,7 +51,6 @@ public:
 		Iterator& operator--()
 		{
 			node = node->previousNode;
-			//std::cout << "--" << std::endl; 
 			return *this;
 		}
 		
@@ -113,7 +111,7 @@ public:
 	{
 		bool result = false;
 		Iterator i = begin();
-		while(i!=end())
+		while(i!=end())  //you can change it into for loop
 		{
 			Iterator temp = i++;
 			if(*temp == value)
@@ -126,8 +124,8 @@ public:
 	}
 
 private:
-	Node<T>* headNode; //pointers are equal if the list is empty
-	Node<T>* endNode; // necessary?
+	Node<T>* headNode;
+	Node<T>* endNode;
 	size_t size;
 
 };

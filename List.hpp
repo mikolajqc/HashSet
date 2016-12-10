@@ -42,7 +42,7 @@ bool List<T>::insert(T value)
 		endNode->previousNode->nextNode = newNode;
 		newNode->previousNode = endNode->previousNode;
 		endNode->previousNode = newNode;
-		newNode->nextNode = endNode; //new feature
+		newNode->nextNode = endNode;
 	}
 	++size;
 	return true;
@@ -55,7 +55,7 @@ bool List<T>::erase(T value)
 	
 	if (!find(value, iterators)) return false;
 	
-	for(unsigned int i = 0; i < iterators.size(); ++i)
+	for(unsigned int i = 0; i < iterators.size(); ++i) // you can change it into sth more sophisticated
 	{
 		erase(iterators[i]);
 	}
@@ -72,7 +72,7 @@ bool List<T>::clean()
 	while(i!=end())
 	{
 		List<T>::Iterator temp = i++;
-		erase(temp); //do poprawki erase powinien przjmowac iterator
+		erase(temp);
 	}
 	return true;
 }

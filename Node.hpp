@@ -1,4 +1,3 @@
-//#include "Node.h"
 template <class T> 
 Node<T>::Node()
 {
@@ -17,7 +16,6 @@ Node<T>::Node(T value)
 template <class T>
 T Node<T>::getValue()
 {
-	//std::cout << "getvalue" << std::endl;
 	if(isEnd)
 	{
 		printf("Attempt to get value from end node!\n");
@@ -38,6 +36,5 @@ bool Node<T>::setValue(T value)
 	}
 	
 	this->value = value;
-	
 	return true;
 }
