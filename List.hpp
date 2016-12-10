@@ -49,17 +49,19 @@ bool List<T>::insert(T value)
 }
 
 template <class T>
-bool List<T>::erase(T value)
+int List<T>::erase(T value)
 {
 	std::vector<List<T>::Iterator> iterators;
+	int result = 0;
 	
-	if (!find(value, iterators)) return false;
+	if (!find(value, iterators)) return result;
 	
 	for(unsigned int i = 0; i < iterators.size(); ++i) // you can change it into sth more sophisticated
 	{
-		erase(iterators[i]);
+		result += erase(iterators[i]);
+		
 	}
-	return true;
+	return result;
 }
 
 template <class T>

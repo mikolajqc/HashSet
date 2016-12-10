@@ -61,7 +61,8 @@ private:
 	unsigned int hashFunction(T value); // FNV-1a
 	size_t size;
 	
-	bool resize(); // resizing when load factor is > 0.8 
+	bool resize(); // resizing when load factor is > 0.8
+	float calculateLoadFactor();
 };
 
 #include "HashTab.hpp"

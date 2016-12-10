@@ -13,7 +13,7 @@ public:
 	~List();
 
 	bool insert(T value);
-	bool erase(T value);
+	int erase(T value); //return number of erased elements 
 	bool clean();//cleaning all list
 	bool empty();
 	size_t getSize();
