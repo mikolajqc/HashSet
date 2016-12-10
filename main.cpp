@@ -24,7 +24,7 @@ int main()
 	cout << testList.getSize() << endl;
 	
 	*/
-	HashTab<std::string> has(2048) ;
+	HashTab<std::string> has(33) ;
 	
 	if (has.empty()) std::cout << "empty" << std::endl;
 	

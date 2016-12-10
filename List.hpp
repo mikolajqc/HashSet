@@ -59,7 +59,6 @@ int List<T>::erase(T value)
 	for(unsigned int i = 0; i < iterators.size(); ++i) // you can change it into sth more sophisticated
 	{
 		result += erase(iterators[i]);
-		
 	}
 	return result;
 }

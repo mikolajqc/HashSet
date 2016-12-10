@@ -1,6 +1,8 @@
-#define KMIN 32
+#define TYPICALMINNUMBEROFCEILS 32
 #define MAXLOADFACTOR 0.8
+#define MINLOADFACTOR 0.5
 
+#include <cmath>
 #include <bitset>
 
 template <class T> 
@@ -10,16 +12,16 @@ HashTab<T>::HashTab(size_t k)
 	size = 0;
 	
 	MAXNUMBEROFCEILS = k;
-	if(k < KMIN)
+	if(k < TYPICALMINNUMBEROFCEILS)
 	{
 		startNumberOfCeils = k;
 	}
 	else
 	{
-		startNumberOfCeils = KMIN;
+		startNumberOfCeils = TYPICALMINNUMBEROFCEILS;
 	}
 	
-	hashTable.reserve(KMIN); // not k ?
+	hashTable.reserve(TYPICALMINNUMBEROFCEILS); // not k ?
 	
 	for(unsigned int i = 0; i < startNumberOfCeils; ++i)
 	{
@@ -58,10 +60,7 @@ template <class T>
 bool HashTab<T>::insert(T value)
 {
 	++size;
-	if(calculateLoadFactor() > MAXLOADFACTOR)
-	{
-		std::cout << "LoadFactor > 0.8!" << std::endl;
-	}
+	resize();
 	
 	unsigned int index = hashFunction(value);
 	
@@ -77,6 +76,9 @@ bool HashTab<T>::erase(T value)
 {
 	unsigned int index = hashFunction(value);
 	size -= hashTable[index]->erase(value);
+	
+	resize();
+	
 	return true;
 }
 
@@ -107,7 +109,7 @@ float HashTab<T>::calculateLoadFactor()
 template <class T>
 size_t HashTab<T>::getSize()
 {
-/*
+
 	//Debug version:
 	size_t result = 0;
 	for(unsigned int i = 0; i < hashTable.size(); ++i)
@@ -116,7 +118,43 @@ size_t HashTab<T>::getSize()
 	}
 	
 	return result;
-*/
+
+/*
 	//Release version:
 	return size;
+*/
+}
+
+template <class T>
+Node<T>& HashTab<T>::operator[] (int index)
+{
+	return *hashTable[index]->headNode; //really? it should be return iterator to the head
+}
+
+template <class T>
+bool HashTab<T>::resize()
+{
+	float loadFactor = calculateLoadFactor();
+	float newNumberOfCeils;
+
+	if(loadFactor > 0.8 && (hashTable.size() >= TYPICALMINNUMBEROFCEILS) && (TYPICALMINNUMBEROFCEILS!= MAXNUMBEROFCEILS))
+	{
+		std::cout << "loadfactor > 0.8!" << std::endl;
+		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTable.size())) + 1));
+	}
+	else if(loadFactor < 0.5 && (hashTable.size() >= TYPICALMINNUMBEROFCEILS) && (TYPICALMINNUMBEROFCEILS!= MAXNUMBEROFCEILS))
+	{
+		std::cout << "loadFactor < 0.5!" << std::endl;
+		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTable.size()))));
+	}
+	else
+	{
+		std::cout << "load factor is fine" << std::endl;
+		return false;
+	}
+	
+	std::vector<List<T>* > newHashTable;
+	newHashTable.reserve(newNumberOfCeils); // necesarry to create hashTable as a pointer 
+	
+	return true;
 }
