@@ -1,6 +1,6 @@
-#define TYPICALMINNUMBEROFCEILS 32
+#define TYPICALMINNUMBEROFCEILS 16
 #define MAXLOADFACTOR 0.8
-#define MINLOADFACTOR 0.1
+#define MINLOADFACTOR 0.2
 
 #include <cmath>
 #include <bitset>
@@ -72,7 +72,7 @@ bool HashTab<T>::insert(T value, bool withResize)
 	
 	(*hashTable)[index]->insert(value);
 	
-	std::cout << "Inserted to index: " << index << std::endl;
+	std::cout << "Value: " << value << " index: " << index << std::endl;
 	++size;
 	if(withResize) resize();
 	
@@ -134,9 +134,9 @@ size_t HashTab<T>::getSize()
 }
 
 template <class T>
-Node<T>& HashTab<T>::operator[] (int index)
+typename List<T>::Iterator HashTab<T>::operator[] (int index)
 {
-	return *(*hashTable)[index]->headNode; //really? it should be return iterator to the head
+	return (*hashTable)[index]->begin(); //really? it should be return iterator to the head
 }
 
 template <class T>

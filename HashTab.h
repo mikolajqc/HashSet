@@ -21,7 +21,7 @@ public:
 	
 	size_t getSize(); //number of elements
 
-	Node<T>& operator[] (int index); //do poprawienia
+	/*Node<T>&*/typename List<T>::Iterator operator[] (int index); //do poprawienia
 	
 	class Iterator: public std::iterator<std::forward_iterator_tag, T>
 	{

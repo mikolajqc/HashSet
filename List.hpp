@@ -49,7 +49,7 @@ bool List<T>::insert(T value)
 }
 
 template <class T>
-int List<T>::erase(T value)
+int List<T>::erase(T value) //to chyba nam opoznia w chuj usuwanie jezeli sa kolizje czy trzeba uzywac finda?
 {
 	std::vector<List<T>::Iterator> iterators;
 	int result = 0;
