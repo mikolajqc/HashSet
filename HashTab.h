@@ -12,14 +12,16 @@ public:
 	HashTab(size_t K); // K - max number of ceils in vector
 	~HashTab();
 	
-	bool insert(T value);
+	bool init(size_t sizeToReserve);
+	
+	bool insert(T value, bool withResize = true);
 	bool erase(T value);
 	bool clean();
 	bool empty();
 	
 	size_t getSize(); //number of elements
 
-	Node<T>& operator[] (int index);
+	Node<T>& operator[] (int index); //do poprawienia
 	
 	class Iterator: public std::iterator<std::forward_iterator_tag, T>
 	{
@@ -55,7 +57,7 @@ public:
 	bool find(T value, std::vector<Iterator>& iterators);
 	
 private:
-	std::vector<List<T>* > hashTable;
+	std::vector<List<T>* >* hashTable;
 	size_t MAXNUMBEROFCEILS; // max number of ceils in vector
 	unsigned int numberOfCeils; // it is a size of vector so it isnt necessary
 	unsigned int hashFunction(T value); // FNV-1a
