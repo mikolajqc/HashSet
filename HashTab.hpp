@@ -1,4 +1,4 @@
-#define TYPICALMINNUMBEROFCEILS 16
+#define TYPICALMINNUMBEROFCEILS 31
 #define MAXLOADFACTOR 0.8
 #define MINLOADFACTOR 0.2
 
@@ -72,7 +72,7 @@ bool HashTab<T>::insert(T value, bool withResize)
 	
 	(*hashTable)[index]->insert(value);
 	
-	std::cout << "Value: " << value << " index: " << index << std::endl;
+	//std::cout << "Value: " << value << " index: " << index << std::endl;
 	++size;
 	if(withResize) resize();
 	
@@ -144,31 +144,32 @@ bool HashTab<T>::resize()
 {
 	float loadFactor = calculateLoadFactor();
 	float newNumberOfCeils;
+	size_t hashTableSize = hashTable->size();
 
-	if(loadFactor > MAXLOADFACTOR && (hashTable->size() >= TYPICALMINNUMBEROFCEILS) && (hashTable->size()!= MAXNUMBEROFCEILS))
+	if(loadFactor > MAXLOADFACTOR && (hashTableSize >= TYPICALMINNUMBEROFCEILS) && (hashTableSize!= MAXNUMBEROFCEILS))
 	{
-		std::cout << "loadfactor > 0.8! ";
-		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTable->size())) + 1));
+		//std::cout << hashTableSize << std::endl;
+		//newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTable->size())) + 1));
+		newNumberOfCeils = findNextPrime(hashTableSize*2);
+		
 		if(newNumberOfCeils > MAXNUMBEROFCEILS) newNumberOfCeils = MAXNUMBEROFCEILS;
 	}
-	else if(loadFactor < MINLOADFACTOR && (hashTable->size() > TYPICALMINNUMBEROFCEILS) /*&& (TYPICALMINNUMBEROFCEILS!= MAXNUMBEROFCEILS)*/)
+	else if(loadFactor < MINLOADFACTOR && (hashTableSize > TYPICALMINNUMBEROFCEILS) /*&& (TYPICALMINNUMBEROFCEILS!= MAXNUMBEROFCEILS)*/)
 	{
-		std::cout << "loadFactor < 0.1! ";
-		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTable->size() - 1))));
+		//std::cout << "loadFactor < 0.2! ";
+		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize - 1))));
 	}
 	else
 	{
-		std::cout << "load factor is fine "<< loadFactor << std::endl;
+		//std::cout << "load factor is fine "<< loadFactor << std::endl;
 		return false;
 	}
-	
-	std::cout << loadFactor << std::endl;
 	
 	std::vector<List<T>* >* oldHashTable = hashTable;
 	hashTable = new std::vector<List<T>* >;
 
 	init(newNumberOfCeils);
-	for(unsigned int i = 0; i < oldHashTable->size(); ++i)
+	for(unsigned int i = 0; i < hashTableSize; ++i)  //hashTableSize is old size 
 	{
 		for(typename List<T>::Iterator lI = (*oldHashTable)[i]->begin(); lI != (*oldHashTable)[i]->end(); ++lI)
 		{
@@ -176,8 +177,49 @@ bool HashTab<T>::resize()
 		}
 		delete (*oldHashTable)[i];
 	}
-	std::cout << "Resized! Current vector size: " << hashTable->size() << std::endl;
+	//std::cout << "Resized! Current vector size: " << hashTable->size() << std::endl;
 	delete oldHashTable;
 	
 	return true;
+}
+
+//these method might be better!
+template<class T>
+bool HashTab<T>::isPrime(std::size_t x)
+{
+    std::size_t o = 4;
+    for (std::size_t i = 5; true; i += o)
+    {
+        std::size_t q = x / i;
+        if (q < i)
+            return true;
+        if (x == q * i)
+            return false;
+        o ^= 6;
+    }
+    return true;
+}
+
+template <class T>
+size_t HashTab<T>::findNextPrime(size_t x)
+{
+    switch (x)
+    {
+    case 0:
+    case 1:
+    case 2:
+        return 2;
+    case 3:
+        return 3;
+    case 4:
+    case 5:
+        return 5;
+    }
+    std::size_t k = x / 6;
+    std::size_t i = x - 6 * k;
+    std::size_t o = i < 2 ? 1 : 5;
+    x = 6 * k + o;
+    for (i = (3 + o) / 2; !isPrime(x); x += i)
+        i ^= 6;
+    return x;
 }
