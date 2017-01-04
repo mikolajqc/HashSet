@@ -104,24 +104,32 @@ public:
 	};
 	
 	Iterator begin()
-	{
-		return Iterator((*hashTable)[minIndex]->begin(), minIndex, this);
+	{	
+		if(empty()) return Iterator((*hashTable)[0]->begin(), 0, this); //to nie ma sensu
+		unsigned int i = 0;
+		for(; i < hashTable->size() && (*hashTable)[i]->empty(); ++i);
+		return Iterator((*hashTable)[i/*minIndex*/]->begin(), i/*minIndex*/, this);
 	}
 	
 	Iterator end()
 	{
+		if(empty()) return Iterator((*hashTable)[0]->begin(), 0, this); //to nie ma sensu
 		return Iterator((*hashTable)[hashTable->size() -1]->end(), (hashTable->size() -1), this);
 	}
 
-	bool erase(Iterator i);
+	bool erase(Iterator i)
+	{
+		--size;
+		return (*(i.hashTab->hashTable))[i.currentIndex]->erase(i.listIterator);
+	}
 
 	bool find(T value, std::vector<Iterator>& iterators);
 	
 private:
 	std::vector<List<T>* >* hashTable;
 	size_t MAXNUMBEROFCEILS; // max number of ceils in vector
-	size_t minIndex; // it is helpfull when looking for begin and end element
-	size_t maxIndex;
+	//size_t minIndex; // it is helpfull when looking for begin and end element
+	//size_t maxIndex; //it isnt necessary
 	unsigned int hashFunction(T value); // FNV-1a
 	size_t size;
 	

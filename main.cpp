@@ -8,13 +8,13 @@ using namespace std;
 
 int main()
 {
-	double lastDuration1 = 1;
-	double lastDuration2 = 1;
+	//double lastDuration1 = 1;
+	//double lastDuration2 = 1;
 	//double lastDuration3 = 1;
 	//double lastDuration4 = 1;
 	
 	
-	
+	/*
 	for(unsigned int k = 1000; k< 10000000; k=2*k)
 	{
 		cout << "Insert dla " << k;
@@ -57,23 +57,25 @@ int main()
 
 	}
 	
-	/*
+	
+	*/
+	
+	
 	HashTab<std::string> hashTab(10);
+	hashTab.begin();
 	
 	hashTab.insert("hejka");
 	hashTab.insert("hejka");
 	hashTab.insert("a");
 	typename HashTab<std::string>::Iterator i = hashTab.begin();
 	std::cout << *i << std::endl;
-	++i;
-	std::cout << *i << std::endl;
-	++i;
-	std::cout << *i << std::endl;
-	++i;
-	typename HashTab<std::string>::Iterator m = hashTab.end();
+	hashTab.erase(i);
+	i = hashTab.begin();
+		hashTab.erase(i);
+	i = hashTab.begin();
+	hashTab.erase(i);
+	i = hashTab.begin();
+
 	
-	if(m == i) std::cout << "End reached!" << std::endl;
-	std::cout << *m << std::endl;
-	*/
 	return 0;
 }
