@@ -13,6 +13,8 @@ int main()
 	//double lastDuration3 = 1;
 	//double lastDuration4 = 1;
 	
+	
+	
 	for(unsigned int k = 1000; k< 10000000; k=2*k)
 	{
 		cout << "Insert dla " << k;
@@ -47,32 +49,31 @@ int main()
 		cout << " HashTab: " << duration2 << " " << (duration2/lastDuration2) << " x wieksze " << endl;
 		lastDuration2 = duration2;
 		
-		//erase
-/*
-		cout << "Erase dla: " << k;
-		start3 = clock();
-		for(unsigned int i = 0; i < amount; ++i)
+		for(typename HashTab<std::string>::Iterator i = has.begin(); i!=has.end(); ++i)
 		{
-			string test = std::to_string(i);
-			has2.erase(test);
+			std::cout << *i << std::endl;
 		}
-		duration3 = ( std::clock() - start3 ) / (double) CLOCKS_PER_SEC;
-		cout << " unordered_map: " << duration3 << " " << (duration3/lastDuration3) << " x wieksze ";
-		lastDuration3 = duration3;
 		
-		
-		start4 = clock();
-		for(unsigned int i = 0; i < amount; ++i)
-		{
-			string test = std::to_string(i);
-			has.erase(test);
-		}
-		duration4 = ( std::clock() - start4 ) / (double) CLOCKS_PER_SEC;
 
-		cout << " HashTab: " << duration4 << " " << (duration4/lastDuration4) << " x wieksze " << endl;
-		lastDuration4 = duration4;
-*/
 	}
 	
+	/*
+	HashTab<std::string> hashTab(10);
+	
+	hashTab.insert("hejka");
+	hashTab.insert("hejka");
+	hashTab.insert("a");
+	typename HashTab<std::string>::Iterator i = hashTab.begin();
+	std::cout << *i << std::endl;
+	++i;
+	std::cout << *i << std::endl;
+	++i;
+	std::cout << *i << std::endl;
+	++i;
+	typename HashTab<std::string>::Iterator m = hashTab.end();
+	
+	if(m == i) std::cout << "End reached!" << std::endl;
+	std::cout << *m << std::endl;
+	*/
 	return 0;
 }

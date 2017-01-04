@@ -61,6 +61,8 @@ bool HashTab<T>::init(size_t sizeToReserve)
 		hashTable->push_back(tempList);
 	}
 	size = 0;
+	maxIndex = 0;
+	minIndex = sizeToReserve-1;
 	return true;
 }
 
@@ -74,6 +76,8 @@ bool HashTab<T>::insert(T value, bool withResize)
 	
 	//std::cout << "Value: " << value << " index: " << index << std::endl;
 	++size;
+	if(minIndex > index) minIndex = index;
+	if(maxIndex < index) maxIndex = index;
 	if(withResize) resize();
 	
 	return true;

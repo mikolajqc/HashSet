@@ -31,29 +31,87 @@ public:
 		friend class HashTab;
 	public:
 		Iterator();
+		Iterator(typename List<T>::Iterator lI, unsigned int cI, HashTab* hT)
+		:listIterator(lI), currentIndex(cI), hashTab(hT){}
+		T operator*()
+		{
+			return *listIterator;
+		}
 		
-		T operator*();
+		Iterator& operator++()
+		{
+			
+			++listIterator;
+			
+			while(currentIndex!=( (*hashTab).hashTable->size() -1 ) && (listIterator == (*(*hashTab).hashTable)[currentIndex]->end() ) )
+			{
+				++currentIndex;
+				listIterator = (*(*hashTab).hashTable)[currentIndex]->begin();
+			}
+			return *this;
+		}
 		
-		Iterator& operator++();
+		Iterator operator++(int)
+		{
+			Iterator temp = *this;
+			++listIterator;
+			
+			while(currentIndex!=( (*hashTab).hashTable->size() -1 ) && (listIterator == (*(*hashTab).hashTable)[currentIndex]->end() ) )
+			{
+				++currentIndex;
+				listIterator = (*(*hashTab).hashTable)[currentIndex]->begin();
+			}
+			return temp;
+		}
 		
-		Iterator operator++(int);
+		Iterator& operator--()
+		{
+			while((listIterator == (*(*hashTab).hashTable)[currentIndex]->begin() ) && currentIndex != 0 )
+			{
+				--currentIndex;
+				listIterator = (*(*hashTab).hashTable)[currentIndex]->end();
+			}
+			--listIterator;
+			return *this;
+		}
 		
-		Iterator& operator--();
+		Iterator operator--(int)
+		{
+			Iterator temp = *this;
+			while((listIterator == (*(*hashTab).hashTable)[currentIndex]->begin() ) && currentIndex != 0 )
+			{
+				--currentIndex;
+				listIterator = (*(*hashTab).hashTable)[currentIndex]->end();
+			}
+			--listIterator;
+			return temp;
+		}
 		
-		Iterator operator--(int);
+		bool operator==(const Iterator& a) const
+		{
+			return listIterator == a.listIterator && currentIndex == a.currentIndex && hashTab == a.hashTab;
+		}
 		
-		bool operator==(const Iterator& a) const;
-		
-		bool operator!=(const Iterator& a) const;
+		bool operator!=(const Iterator& a) const
+		{
+			return listIterator != a.listIterator || currentIndex != a.currentIndex || hashTab != a.hashTab;
+		}
 	
 	private:
-		Node<T>* node;
+		typename List<T>::Iterator listIterator;
+		unsigned int currentIndex;
 		HashTab* hashTab;
 	};
 	
-	Iterator begin();
+	Iterator begin()
+	{
+		return Iterator((*hashTable)[minIndex]->begin(), minIndex, this);
+	}
 	
-	Iterator end();
+	Iterator end()
+	{
+		return Iterator((*hashTable)[hashTable->size() -1]->end(), (hashTable->size() -1), this);
+	}
 
 	bool erase(Iterator i);
 
@@ -62,7 +120,8 @@ public:
 private:
 	std::vector<List<T>* >* hashTable;
 	size_t MAXNUMBEROFCEILS; // max number of ceils in vector
-	//unsigned int numberOfCeils; // it is a size of vector so it isnt necessary
+	size_t minIndex; // it is helpfull when looking for begin and end element
+	size_t maxIndex;
 	unsigned int hashFunction(T value); // FNV-1a
 	size_t size;
 	
