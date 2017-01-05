@@ -3,7 +3,6 @@
 #define TEST_H
 
 #include <iostream>
-//#include <unordered_map>
 #include "HashTab.h"
 #include <ctime>
 #include <boost/unordered_set.hpp>
@@ -14,12 +13,13 @@ class Test
 public:
 	bool insertTest();
 	bool eraseTest();
-	bool createFileStream(std::string pathFile);
+	bool createFileStream();
 	bool closeFileStream();
 	
-	Test(size_t K)
+	Test(size_t K, std::string pathFile)
 	{
 		hashTab = new HashTab<std::string>(K);
+		this->pathFile = pathFile;
 	}
 	
 	~Test()
@@ -31,7 +31,7 @@ public:
 private:
 	HashTab<std::string>* hashTab;
 	std::fstream fileStream;
-	
+	std::string pathFile;
 	
 };
 

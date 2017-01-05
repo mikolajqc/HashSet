@@ -1,11 +1,12 @@
 //Plik main.cpp projektu z przedmiotu AAL. Autor: Mikolaj Ciesielski
 #include <iostream>
-//#include <unordered_map>
 #include "HashTab.h"
 #include <ctime>
 #include <boost/unordered_set.hpp>
 #include <fstream>
 #include "Test.h"
+#include "Generator.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -28,14 +29,21 @@ int main( int argc, char * argv[] )
 		}
 		if(*(argv[1] + 1) == 'f')
 		{
+			size_t K;
+			cout << "Enter maximal number of ceils in hash table:";
+			cin >> K;
 			printf("File mode!\n");
-			Test test(100000000);
+			Test test(K, "polski.txt");
 			test.insertTest();
 			test.eraseTest();
 		}
 		else if(*(argv[1] + 1) == 'g')
 		{
 			printf("Generate mode!\n");
+			Generator gen;
+			gen.generatePairs();
+			gen.generateVectorToRandom();
+			for(unsigned int i = 0; i < 10000; ++i)cout << gen.generatePartOfString();
 		}
 	}
 	return 0;

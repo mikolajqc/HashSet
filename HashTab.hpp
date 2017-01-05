@@ -69,7 +69,7 @@ bool HashTab<T>::insert(T value, bool withResize)
 {
 
 	unsigned int index = hashFunction(value);
-	//std::cout << index << std::endl;
+	//std::cout <<  << std::endl;
 	
 	(*hashTable)[index]->insert(value);
 	
