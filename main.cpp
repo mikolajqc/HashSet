@@ -8,14 +8,11 @@ using namespace std;
 
 int main()
 {
-	//double lastDuration1 = 1;
-	//double lastDuration2 = 1;
-	//double lastDuration3 = 1;
-	//double lastDuration4 = 1;
-	
-	
 	/*
-	for(unsigned int k = 1000; k< 10000000; k=2*k)
+	double lastDuration1 = 1;
+	double lastDuration2 = 1;
+	
+	for(unsigned int k = 1000000; k< 10000000; k=2*k)
 	{
 		cout << "Insert dla " << k;
 		HashTab<std::string> has(1000000000);
@@ -49,10 +46,10 @@ int main()
 		cout << " HashTab: " << duration2 << " " << (duration2/lastDuration2) << " x wieksze " << endl;
 		lastDuration2 = duration2;
 		
-		for(typename HashTab<std::string>::Iterator i = has.begin(); i!=has.end(); ++i)
-		{
-			std::cout << *i << std::endl;
-		}
+		//for(typename HashTab<std::string>::Iterator i = has.begin(); i!=has.end(); ++i)
+		//{
+		//	std::cout << *i << std::endl;
+		//}
 		
 
 	}
@@ -69,6 +66,7 @@ int main()
 	hashTab.insert("a");
 	typename HashTab<std::string>::Iterator i = hashTab.begin();
 	std::cout << *i << std::endl;
+	std::cout << *hashTab[0] << std::endl;
 	hashTab.erase(i);
 	i = hashTab.begin();
 		hashTab.erase(i);

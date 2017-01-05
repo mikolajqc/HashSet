@@ -23,7 +23,7 @@ public:
 	
 	size_t getSize(); //number of elements
 
-	typename List<T>::Iterator operator[] (int index);
+	typename HashTab<T>::Iterator operator[] (int index);
 	
 	//iterator w ogole w tym wypadku jest konieczny?
 	class Iterator: public std::iterator<std::forward_iterator_tag, T>
@@ -108,7 +108,7 @@ public:
 		if(empty()) return Iterator((*hashTable)[0]->begin(), 0, this); //to nie ma sensu
 		unsigned int i = 0;
 		for(; i < hashTable->size() && (*hashTable)[i]->empty(); ++i);
-		return Iterator((*hashTable)[i/*minIndex*/]->begin(), i/*minIndex*/, this);
+		return Iterator((*hashTable)[i]->begin(), i, this);
 	}
 	
 	Iterator end()
@@ -128,8 +128,6 @@ public:
 private:
 	std::vector<List<T>* >* hashTable;
 	size_t MAXNUMBEROFCEILS; // max number of ceils in vector
-	//size_t minIndex; // it is helpfull when looking for begin and end element
-	//size_t maxIndex; //it isnt necessary
 	unsigned int hashFunction(T value); // FNV-1a
 	size_t size;
 	

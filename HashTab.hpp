@@ -71,13 +71,12 @@ bool HashTab<T>::insert(T value, bool withResize)
 {
 
 	unsigned int index = hashFunction(value);
+	std::cout << index << std::endl;
 	
 	(*hashTable)[index]->insert(value);
 	
-	//std::cout << "Value: " << value << " index: " << index << std::endl;
 	++size;
-	//if(minIndex > index) minIndex = index;
-	//if(maxIndex < index) maxIndex = index;
+	
 	if(withResize) resize();
 	
 	return true;
@@ -121,7 +120,7 @@ float HashTab<T>::calculateLoadFactor()
 template <class T>
 size_t HashTab<T>::getSize()
 {
-
+/*
 	//Debug version:
 	size_t result = 0;
 	for(unsigned int i = 0; i < hashTable->size(); ++i)
@@ -130,17 +129,17 @@ size_t HashTab<T>::getSize()
 	}
 	
 	return result;
+*/
 
-/*
 	//Release version:
 	return size;
-*/
+
 }
 
 template <class T>
-typename List<T>::Iterator HashTab<T>::operator[] (int index)
+typename HashTab<T>::Iterator HashTab<T>::operator[] (int index)
 {
-	return (*hashTable)[index]->begin(); //really? it should be return iterator to the head
+	return Iterator((*hashTable)[index]->begin(), index, this);
 }
 
 template <class T>
@@ -172,7 +171,7 @@ bool HashTab<T>::resize()
 	std::vector<List<T>* >* oldHashTable = hashTable;
 	hashTable = new std::vector<List<T>* >;
 
-	init(newNumberOfCeils);
+	init(newNumberOfCeils); ///tutaj robi sie 2 razy ! po co wypelnaic od razu??
 	for(unsigned int i = 0; i < hashTableSize; ++i)  //hashTableSize is old size 
 	{
 		for(typename List<T>::Iterator lI = (*oldHashTable)[i]->begin(); lI != (*oldHashTable)[i]->end(); ++lI)
