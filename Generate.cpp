@@ -1,6 +1,24 @@
 #include "Generator.h"
 #include <unistd.h>
+#include <fstream>
 
+int Generator::generateFiles()
+{
+	unsigned long int currentValue = start;
+	for(unsigned int i = 0; i < numberOfSteps; ++i)
+	{
+		std::fstream fileStream;
+		fileStream.open ("Tests/" + std::to_string(i) + ".txt", std::ifstream::out);
+		
+		for(unsigned int j = 0; j < currentValue;++j) //we have to count number of breaklines!!!
+		{
+			fileStream << generatePartOfString();
+		}
+		
+		fileStream.close();
+	}
+	return 0;
+}
 
 int Generator::generatePairs()
 {

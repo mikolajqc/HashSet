@@ -13,10 +13,13 @@ public:
 	int generateFiles(); //this method return number of created files
 	std::string generatePartOfString();
 
+	Generator(unsigned long int st, unsigned int sp, unsigned int n)
+	:start(st), step(sp), numberOfSteps(n) {};
+
 private:
 	unsigned long int start;
 	unsigned int step;
-	unsigned int numbeOfSteps;
+	unsigned int numberOfSteps;
 
 	std::vector<std::pair<std::string, int> > pairs;
 	std::vector<std::string> vectorToRandom;

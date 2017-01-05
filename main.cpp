@@ -40,10 +40,11 @@ int main( int argc, char * argv[] )
 		else if(*(argv[1] + 1) == 'g')
 		{
 			printf("Generate mode!\n");
-			Generator gen;
+			Generator gen(1000,1000,10);
 			gen.generatePairs();
 			gen.generateVectorToRandom();
-			for(unsigned int i = 0; i < 10000; ++i)cout << gen.generatePartOfString();
+			gen.generateFiles();
+			//for(unsigned int i = 0; i < 10000; ++i)cout << gen.generatePartOfString();
 		}
 	}
 	return 0;
