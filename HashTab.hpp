@@ -69,7 +69,7 @@ bool HashTab<T>::insert(T value, bool withResize)
 {
 
 	unsigned int index = hashFunction(value);
-	std::cout << index << std::endl;
+	//std::cout << index << std::endl;
 	
 	(*hashTable)[index]->insert(value);
 	
@@ -155,13 +155,14 @@ bool HashTab<T>::resize()
 	}
 	else if(loadFactor < MINLOADFACTOR && (hashTableSize > TYPICALMINNUMBEROFCEILS) /*&& (TYPICALMINNUMBEROFCEILS!= MAXNUMBEROFCEILS)*/)
 	{
-		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize - 1))));
+		//newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize - 1))));
+		newNumberOfCeils = findNextPrime(hashTableSize/2);
 	}
 	else
 	{
 		return false;
 	}
-
+	//std::cout << newNumberOfCeils << std::endl;
 	std::vector<List<T>* >* oldHashTable = hashTable;
 	hashTable = new std::vector<List<T>* >;
 
