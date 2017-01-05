@@ -1,7 +1,6 @@
 #include "Test.h"
 
 
-
 bool Test::insertTest()
 {
 	if(createFileStream())
@@ -16,7 +15,7 @@ bool Test::insertTest()
 			std::getline (fileStream,word);
 		}
 		clock_t resultTime = clock() - start;
-		printf("Insert %d strings.\nTime: %fs\n", i,(static_cast<float>(resultTime))/CLOCKS_PER_SEC);
+		printf("Insert %d strings.\tTime: %fs\t\t", i,(static_cast<float>(resultTime))/CLOCKS_PER_SEC);
 		fileStream.close();
 	}
 	else
@@ -40,7 +39,7 @@ bool Test::eraseTest()
 			std::getline (fileStream,word);
 		}
 		clock_t resultTime = clock() - start;
-		printf("Erase %d strings.\nTime: %fs\n", i, (static_cast<float>(resultTime))/CLOCKS_PER_SEC);
+		printf("Erase %d strings.\tTime: %fs\n", i, (static_cast<float>(resultTime))/CLOCKS_PER_SEC);
 		
 		fileStream.close();
 	}

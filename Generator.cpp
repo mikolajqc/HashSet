@@ -10,12 +10,21 @@ int Generator::generateFiles()
 		std::fstream fileStream;
 		fileStream.open ("Tests/" + std::to_string(i) + ".txt", std::ifstream::out);
 		
-		for(unsigned int j = 0; j < currentValue;++j) //we have to count number of breaklines!!!
+		for(unsigned int j = 0; j < currentValue;)
 		{
-			fileStream << generatePartOfString();
+			
+			std::string partOfString = generatePartOfString();
+			if(partOfString == "\n") ++j;
+			fileStream << partOfString;
+			while(partOfString == "\n")
+			{
+				partOfString = generatePartOfString();
+			}
+			if(j<currentValue)fileStream << partOfString;
 		}
 		
 		fileStream.close();
+		currentValue *= step;
 	}
 	return 0;
 }
@@ -43,7 +52,6 @@ int Generator::generatePairs()
 					breakLineWasFound = true;
 					breakLinePosition = pairs.size() - 1;
 				}
-
 			}
 			else
 			{
@@ -51,14 +59,7 @@ int Generator::generatePairs()
 				tempString.push_back(letters[j]);
 				pairs.push_back(std::pair<std::string, int>(tempString, tempFrequency));
 			}
-
-
 		}
-	}
-	
-	for(unsigned int i = 0; i < pairs.size(); ++i)
-	{
-		std::cout << pairs[i].first << pairs[i].second << std::endl;
 	}
 	
 	return 0;
@@ -73,7 +74,6 @@ int Generator::generateVectorToRandom()
 			vectorToRandom.push_back(pairs[i].first);
 		}
 	}
-	std::cout << vectorToRandom.size();
 	return 0;
 }
 

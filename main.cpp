@@ -11,14 +11,16 @@
 using namespace std;
 
 //-f [filepath or default]
-//-g [from] [to] [step] - wielkosc problemu - generate
+//-g -f full edition -start - generate
 // nothing - user edition
 
 int main( int argc, char * argv[] )
 {
 	if(argc == 1)
 	{
-		printf("User mode!\n");
+		printf("Help:\n");
+		printf("-f -file mode, you can enter a path to the file you want to use.\n");
+		printf("-g generate mode\n-g -f - generate mode with generating all files\n");
 	}
 	else
 	{
@@ -40,11 +42,19 @@ int main( int argc, char * argv[] )
 		else if(*(argv[1] + 1) == 'g')
 		{
 			printf("Generate mode!\n");
-			Generator gen(1000,1000,10);
+			Generator gen(1000,2,15);
 			gen.generatePairs();
 			gen.generateVectorToRandom();
-			gen.generateFiles();
-			//for(unsigned int i = 0; i < 10000; ++i)cout << gen.generatePartOfString();
+			//only if necessary
+			if(argc == 3 && *(argv[2] + 1) == 'f') gen.generateFiles();
+			
+			for(unsigned int i = 0; i < 15; ++i)
+			{
+				Test test(100000000,"Tests/" + std::to_string(i) + ".txt");
+				test.insertTest();
+				test.eraseTest();
+			}
+			
 		}
 	}
 	return 0;
