@@ -64,6 +64,9 @@ int main()
 	hashTab.insert("hejka");
 	hashTab.insert("hejka");
 	hashTab.insert("a");
+	std::vector<typename HashTab<std::string>::Iterator > iterators;
+
+	
 	typename HashTab<std::string>::Iterator i = hashTab.begin();
 	std::cout << *i << std::endl;
 	std::cout << *hashTab[0] << std::endl;

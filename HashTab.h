@@ -19,7 +19,6 @@ public:
 	bool erase(T value);
 	bool clean();
 	bool empty();
-	//dopisz find();
 	
 	size_t getSize(); //number of elements
 
@@ -123,7 +122,20 @@ public:
 		return (*(i.hashTab->hashTable))[i.currentIndex]->erase(i.listIterator);
 	}
 
-	bool find(T value, std::vector<Iterator>& iterators);
+	bool find(T value, std::vector<Iterator>& iterators)
+	{
+		unsigned int index = hashFunction(value);
+		std::vector<typename List<T>::Iterator> listIterators;
+		bool result = (*hashTable)[index]->find(value,listIterators);
+		
+		for(unsigned int i = 0; i < listIterators.size(); ++i)
+		{
+			Iterator tempIterator(listIterators[i], index, this);
+			iterators.push_back(tempIterator);
+		}
+		
+		return result;
+	}
 	
 private:
 	std::vector<List<T>* >* hashTable;

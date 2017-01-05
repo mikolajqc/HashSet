@@ -61,8 +61,6 @@ bool HashTab<T>::init(size_t sizeToReserve)
 		hashTable->push_back(tempList);
 	}
 	size = 0;
-	//maxIndex = 0;
-	//minIndex = sizeToReserve-1;
 	return true;
 }
 
@@ -151,23 +149,19 @@ bool HashTab<T>::resize()
 
 	if(loadFactor > MAXLOADFACTOR && (hashTableSize >= TYPICALMINNUMBEROFCEILS) && (hashTableSize!= MAXNUMBEROFCEILS))
 	{
-		//std::cout << hashTableSize << std::endl;
-		//newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTable->size())) + 1));
 		newNumberOfCeils = findNextPrime(hashTableSize*2);
 		
 		if(newNumberOfCeils > MAXNUMBEROFCEILS) newNumberOfCeils = MAXNUMBEROFCEILS;
 	}
 	else if(loadFactor < MINLOADFACTOR && (hashTableSize > TYPICALMINNUMBEROFCEILS) /*&& (TYPICALMINNUMBEROFCEILS!= MAXNUMBEROFCEILS)*/)
 	{
-		//std::cout << "loadFactor < 0.2! ";
 		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize - 1))));
 	}
 	else
 	{
-		//std::cout << "load factor is fine "<< loadFactor << std::endl;
 		return false;
 	}
-	
+
 	std::vector<List<T>* >* oldHashTable = hashTable;
 	hashTable = new std::vector<List<T>* >;
 
@@ -180,9 +174,9 @@ bool HashTab<T>::resize()
 		}
 		delete (*oldHashTable)[i];
 	}
-	//std::cout << "Resized! Current vector size: " << hashTable->size() << std::endl;
+
 	delete oldHashTable;
-	
+
 	return true;
 }
 
