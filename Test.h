@@ -11,8 +11,9 @@
 class Test
 {
 public:
-	bool insertTest();
-	bool eraseTest();
+	bool test();
+	float insertTest();
+	float eraseTest();
 	bool createFileStream();
 	bool closeFileStream();
 	

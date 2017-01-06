@@ -1,5 +1,9 @@
 #include "Generator.h"
+#ifdef _WIN32
+#include <Windows.h>
+#else
 #include <unistd.h>
+#endif
 #include <fstream>
 
 int Generator::generateFiles()
@@ -95,8 +99,13 @@ unsigned long mix(unsigned long a, unsigned long b, unsigned long c)
 
 std::string Generator::generatePartOfString()
 {
-	srand (mix(clock(), time(NULL), getpid()));
+#ifdef _WIN32
+	srand(1000);
+#else
+	srand(mix(clock(), time(NULL), getpid()));
+#endif // _Windows
+
+	
 	unsigned int randomIndex = rand()%vectorToRandom.size();
 	return vectorToRandom[randomIndex];
 }
-

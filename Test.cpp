@@ -1,8 +1,10 @@
 #include "Test.h"
 
 
-bool Test::insertTest()
+float Test::insertTest()
 {
+	float result = -1;
+	
 	if(createFileStream())
 	{
 		std::string word;
@@ -15,18 +17,16 @@ bool Test::insertTest()
 			std::getline (fileStream,word);
 		}
 		clock_t resultTime = clock() - start;
-		printf("Insert %d strings.\tTime: %fs\t\t", i,(static_cast<float>(resultTime))/CLOCKS_PER_SEC);
+		result = static_cast<float>(resultTime)/CLOCKS_PER_SEC;
 		fileStream.close();
 	}
-	else
-	{
-		return false;
-	}
-	return true;
+
+	return result;
 }
 
-bool Test::eraseTest()
+float Test::eraseTest()
 {
+	float result;
 	if(createFileStream())
 	{
 		std::string word;
@@ -39,15 +39,11 @@ bool Test::eraseTest()
 			std::getline (fileStream,word);
 		}
 		clock_t resultTime = clock() - start;
-		printf("Erase %d strings.\tTime: %fs\n", i, (static_cast<float>(resultTime))/CLOCKS_PER_SEC);
+		result = static_cast<float>(resultTime)/CLOCKS_PER_SEC;
 		
 		fileStream.close();
 	}
-	else
-	{
-		return false;
-	}
-	return true;
+	return result;
 }
 
 bool Test::createFileStream()
@@ -55,7 +51,7 @@ bool Test::createFileStream()
 	fileStream.open (pathFile, std::ifstream::in);
 	if(fileStream.is_open() == false)
 	{
-		printf("Error: No such file directory!");
+		printf("Error: No such directory!\n");
 		return false;
 	}
 	return true;
@@ -65,4 +61,9 @@ bool Test::closeFileStream()
 {
 	fileStream.close();
 	return true;
-} 
+}
+
+bool Test::test()
+{
+	return insertTest() && eraseTest() ;
+}

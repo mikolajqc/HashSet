@@ -22,7 +22,6 @@ public:
 	
 	size_t getSize(); //number of elements
 
-	typename HashTab<T>::Iterator operator[] (int index);
 	
 	//iterator w ogole w tym wypadku jest konieczny?
 	class Iterator: public std::iterator<std::forward_iterator_tag, T>
@@ -101,6 +100,8 @@ public:
 		unsigned int currentIndex;
 		HashTab* hashTab;
 	};
+	
+	typename HashTab<T>::Iterator operator[] (int index);
 	
 	Iterator begin()
 	{	

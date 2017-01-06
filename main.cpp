@@ -2,7 +2,7 @@
 #include <iostream>
 #include "HashTab.h"
 #include <ctime>
-#include <boost/unordered_set.hpp>
+
 #include <fstream>
 #include "Test.h"
 #include "Generator.h"
@@ -10,9 +10,44 @@
 
 using namespace std;
 
-//-f [filepath or default]
-//-g -f full edition -start - generate
-// nothing - user edition
+
+int fileMode()
+{
+	printf("File mode!\n");
+	size_t K;
+	cout << "Enter maximal number of ceils in hash table:";
+	cin >> K;
+	std::string path;
+	cout << "\nEnter a path: ";
+	cin >> path;
+	Test test(K, path);
+	test.test();
+	return 0;
+}
+
+int generateMode(int argc, char * argv[])
+{
+	printf("Generate mode!\n");
+	size_t K;
+	cout << "Enter maximal number of ceils in hash table:";
+	cin >> K;
+	Generator gen(1000,2,15);
+	gen.generatePairs();
+	gen.generateVectorToRandom();
+	//only if necessary
+	if(argc == 3 && *(argv[2] + 1) == 'f') gen.generateFiles();
+	
+	cout << "Number of strings:\tInsert time:\t\tErase time:\n";
+	
+	for(unsigned int i = 0; i < 15; ++i)
+	{
+		Test test(K,"Tests/" + std::to_string(i) + ".txt");
+		cout << 1000 << " * 2^" << i << " strings \t";
+		cout  << "Insert" << test.insertTest() << "s\t\t";
+		cout  << "Erase" << test.eraseTest() <<  "s" <<endl;
+	}
+	return 0;
+}
 
 int main( int argc, char * argv[] )
 {
@@ -31,30 +66,11 @@ int main( int argc, char * argv[] )
 		}
 		if(*(argv[1] + 1) == 'f')
 		{
-			size_t K;
-			cout << "Enter maximal number of ceils in hash table:";
-			cin >> K;
-			printf("File mode!\n");
-			Test test(K, "polski.txt");
-			test.insertTest();
-			test.eraseTest();
+			fileMode();
 		}
 		else if(*(argv[1] + 1) == 'g')
 		{
-			printf("Generate mode!\n");
-			Generator gen(1000,2,15);
-			gen.generatePairs();
-			gen.generateVectorToRandom();
-			//only if necessary
-			if(argc == 3 && *(argv[2] + 1) == 'f') gen.generateFiles();
-			
-			for(unsigned int i = 0; i < 15; ++i)
-			{
-				Test test(100000000,"Tests/" + std::to_string(i) + ".txt");
-				test.insertTest();
-				test.eraseTest();
-			}
-			
+			generateMode(argc, argv);
 		}
 	}
 	return 0;
