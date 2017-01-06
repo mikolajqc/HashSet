@@ -12,10 +12,11 @@ class Test
 {
 public:
 	bool test();
-	float insertTest();
+	float insertTest(); //these methods return time
 	float eraseTest();
 	bool createFileStream();
 	bool closeFileStream();
+	bool correctnessTest();
 	
 	Test(size_t K, std::string pathFile)
 	{

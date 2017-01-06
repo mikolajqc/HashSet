@@ -21,7 +21,15 @@ int fileMode()
 	cout << "\nEnter a path: ";
 	cin >> path;
 	Test test(K, path);
-	test.test();
+	//test.test();
+	if(test.correctnessTest() == true)
+	{
+		cout << "Result: OK\n";
+	}
+	else
+	{
+		cout << "Result: FAIL\n";
+	}
 	return 0;
 }
 

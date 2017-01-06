@@ -67,3 +67,65 @@ bool Test::test()
 {
 	return insertTest() && eraseTest() ;
 }
+
+bool Test::correctnessTest()
+{
+	bool result = true;
+	
+	if(createFileStream())
+	{
+		//First test if size of HashTab is equal to  number of inserted elements
+		for(unsigned int i = 1; i < 1000; ++i)
+		{
+			for(unsigned int j = 0; j < i; ++j)
+			{	
+				std::string word;
+				std::getline (fileStream,word);
+				if(!fileStream.eof()) hashTab->insert(word);
+			}
+			printf("Insert %d elements result: ", i);
+			result *= (hashTab->getSize() == i);
+			if(result) printf("OK\n");
+			else printf("BAD\n");
+			hashTab->clean();
+			fileStream.clear();
+			fileStream.seekg(0, std::ifstream::beg);
+		}
+		
+		for(unsigned int i = 1; i < 1000; ++i)
+		{
+			for(unsigned int j = 0; j < i; ++j)
+			{	
+				std::string word;
+				std::getline (fileStream,word);
+				if(!fileStream.eof()) hashTab->insert(word);
+			}
+			
+			fileStream.clear();
+			fileStream.seekg(0, std::ifstream::beg);
+			
+			for(unsigned int j = 0; j < i; ++j)
+			{	
+				std::string word;
+				std::getline (fileStream,word);
+				if(!fileStream.eof()) hashTab->erase(word);
+			}
+			printf("Erase %d elements result: ", i);
+			result *= (hashTab->getSize() == 0);
+			if(result) printf("OK\n");
+			else printf("BAD\n");
+			hashTab->clean();
+			fileStream.clear();
+			fileStream.seekg(0, std::ifstream::beg);
+		}
+		
+		
+		
+	}
+	else
+	{
+		result = false;
+	}
+	closeFileStream();
+	return result;
+}
