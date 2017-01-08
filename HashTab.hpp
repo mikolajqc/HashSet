@@ -1,4 +1,4 @@
-#define TYPICALMINNUMBEROFCEILS 31
+#define TYPICALMINNUMBEROFCEILS 32
 #define MAXLOADFACTOR 0.8
 #define MINLOADFACTOR 0.2
 
@@ -46,7 +46,7 @@ unsigned int HashTab<T>::hashFunction(T value)
 		hash = hash * 16777619;
 	}
 	hash%=hashTable->size();
-	
+	//hash = 0; //to delete
 	return hash;
 }
 
@@ -148,20 +148,22 @@ bool HashTab<T>::resize()
 
 	if(loadFactor > MAXLOADFACTOR && (hashTableSize >= TYPICALMINNUMBEROFCEILS) && (hashTableSize!= MAXNUMBEROFCEILS))
 	{
-		newNumberOfCeils = findNextPrime(hashTableSize*2);
+		//newNumberOfCeils = findNextPrime(hashTableSize*2);
+		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize)+1)));
+		
 		
 		if(newNumberOfCeils > MAXNUMBEROFCEILS) newNumberOfCeils = MAXNUMBEROFCEILS;
 	}
 	else if(loadFactor < MINLOADFACTOR && (hashTableSize > TYPICALMINNUMBEROFCEILS) /*&& (TYPICALMINNUMBEROFCEILS!= MAXNUMBEROFCEILS)*/)
 	{
-		//newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize - 1))));
-		newNumberOfCeils = findNextPrime(hashTableSize/2);
+		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize - 1))));
+		//newNumberOfCeils = findNextPrime(hashTableSize/2);
 	}
 	else
 	{
 		return false;
 	}
-	//std::cout << newNumberOfCeils << std::endl;
+	//std::cout << newNumberOfCeils << " ";
 	std::vector<List<T>* >* oldHashTable = hashTable;
 	hashTable = new std::vector<List<T>* >;
 
@@ -174,6 +176,8 @@ bool HashTab<T>::resize()
 		}
 		delete (*oldHashTable)[i];
 	}
+	
+	
 
 	delete oldHashTable;
 

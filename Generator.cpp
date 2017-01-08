@@ -9,23 +9,53 @@
 int Generator::generateFiles()
 {
 	unsigned long int currentValue = start;
+	//conf.txt
+	std::fstream confFile;
+	confFile.open ("Tests/conf.txt", std::ifstream::out);
+	confFile << start << "\n";
+	confFile << step << "\n";
+	confFile << numberOfSteps << "\n";
+	confFile.close();
+	
 	for(unsigned int i = 0; i < numberOfSteps; ++i)
 	{
 		std::fstream fileStream;
 		fileStream.open ("Tests/" + std::to_string(i) + ".txt", std::ifstream::out);
-		
+		unsigned int wordLength = 0;
 		for(unsigned int j = 0; j < currentValue;)
 		{
 			
 			std::string partOfString = generatePartOfString();
-			if(partOfString == "\n") ++j;
-			fileStream << partOfString;
-			while(partOfString == "\n")
+			if(partOfString == "\n")
 			{
-				partOfString = generatePartOfString();
+				++j;
+				wordLength = 0;
 			}
-			if(j<currentValue)fileStream << partOfString;
+			else
+			{
+				wordLength += 2;
+				if(wordLength>50)
+				{
+					partOfString = "\n";
+					++j;
+					wordLength = 0;
+				}
+			}
+			fileStream << partOfString;
+			if(partOfString == "\n")
+			{
+				while(partOfString == "\n")
+				{
+					partOfString = generatePartOfString();
+				}
+				if(j<currentValue)
+					{
+						fileStream << partOfString;
+						wordLength +=2;
+					}
+			}
 		}
+	
 		
 		fileStream.close();
 		currentValue *= step;

@@ -10,10 +10,10 @@
 
 using namespace std;
 
-
+  
 int fileMode()
 {
-	printf("File mode!\n");
+	printf("Correctness test mode!\n");
 	size_t K;
 	cout << "Enter maximal number of ceils in hash table:";
 	cin >> K;
@@ -33,24 +33,61 @@ int fileMode()
 	return 0;
 }
 
+bool getConfiguration(std::vector<unsigned int>& result)
+{
+	std::fstream confFile;
+	confFile.open ("Tests/conf.txt", std::ifstream::in);
+	if(confFile.is_open() == false)
+	{
+		printf("Error: File: \"conf.txt\" doesnt exist!\n");
+		return false;
+	}
+	std::string::size_type sizeType;
+	std::string start, step, numberOfSteps;
+	std::getline (confFile,start);
+	std::getline (confFile,step);
+	std::getline (confFile,numberOfSteps);
+	
+	result.push_back(std::stoi(start, &sizeType));
+	result.push_back(std::stoi(step, &sizeType));
+	result.push_back(std::stoi(numberOfSteps, &sizeType));
+	
+	confFile.close();
+	return true;
+}
+
 int generateMode(int argc, char * argv[])
 {
-	printf("Generate mode!\n");
+	printf("Time test mode!\n");
 	size_t K;
 	cout << "Enter maximal number of ceils in hash table:";
 	cin >> K;
-	Generator gen(1000,2,15);
-	gen.generatePairs();
-	gen.generateVectorToRandom();
 	//only if necessary
-	if(argc == 3 && *(argv[2] + 1) == 'f') gen.generateFiles();
-	
+	if(argc == 3 && *(argv[2] + 1) == 'f')
+	{
+		cout << "Enter first number of strings: ";
+		unsigned int firstSize, numberOfTests;
+		cin >> firstSize;
+		cout << "Enter first number of tests: ";
+		cin >> numberOfTests;
+		
+		Generator gen(firstSize,2,numberOfTests);
+		
+		gen.generatePairs();
+		gen.generateVectorToRandom();
+		cout << "Files generating..." << endl;
+		gen.generateFiles();
+	}
+	cout <<"Time testing: \n";
 	cout << "Number of strings:\tInsert time:\t\tErase time:\n";
 	
-	for(unsigned int i = 0; i < 15; ++i)
+	std::vector<unsigned int> conf;
+	if(getConfiguration(conf) == false) return 0;
+	
+	for(unsigned int i = 0; i < conf[2]; ++i)
 	{
 		Test test(K,"Tests/" + std::to_string(i) + ".txt");
-		cout << 1000 << " * 2^" << i << " strings \t";
+		cout << conf[0] << " * 2^" << i << " strings \t";
 		cout  << "Insert" << test.insertTest() << "s\t\t";
 		cout  << "Erase" << test.eraseTest() <<  "s" <<endl;
 	}
@@ -62,8 +99,8 @@ int main( int argc, char * argv[] )
 	if(argc == 1)
 	{
 		printf("Help:\n");
-		printf("-f -file mode, you can enter a path to the file you want to use.\n");
-		printf("-g generate mode\n-g -f - generate mode with generating all files\n");
+		printf("-f -correctness test mode, you can enter a path to the file you want to use.\n");
+		printf("-g -time test mode \n-g -f - with generators\n");
 	}
 	else
 	{
