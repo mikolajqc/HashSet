@@ -2,7 +2,6 @@
 #include <iostream>
 #include "HashTab.h"
 #include <ctime>
-
 #include <fstream>
 #include "Test.h"
 #include "Generator.h"
@@ -13,7 +12,7 @@ using namespace std;
   
 int fileMode()
 {
-	printf("Correctness test mode!\n");
+	printf("Correctness test mode!\nBefore a test make sure test file has more than 1000 strings.\n");
 	size_t K;
 	cout << "Enter maximal number of ceils in hash table:";
 	cin >> K;
@@ -21,7 +20,7 @@ int fileMode()
 	cout << "\nEnter a path: ";
 	cin >> path;
 	Test test(K, path);
-	//test.test();
+
 	if(test.correctnessTest() == true)
 	{
 		cout << "Result: OK\n";
@@ -58,11 +57,11 @@ bool getConfiguration(std::vector<unsigned int>& result)
 
 int generateMode(int argc, char * argv[])
 {
-	printf("Time test mode!\n");
+	printf("Time test mode!\n.");
 	size_t K;
 	cout << "Enter maximal number of ceils in hash table:";
 	cin >> K;
-	//only if necessary
+
 	if(argc == 3 && *(argv[2] + 1) == 'f')
 	{
 		cout << "Enter first number of strings: ";

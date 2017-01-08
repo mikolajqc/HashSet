@@ -138,15 +138,17 @@ public:
 		return result;
 	}
 	
+	friend class Test;
+	
 private:
 	std::vector<List<T>* >* hashTable;
 	size_t MAXNUMBEROFCEILS; // max number of ceils in vector
 	unsigned int hashFunction(T value); // FNV-1a
 	size_t size;
 	
-	size_t findNextPrime(size_t number);
-	bool isPrime (size_t number);
-	size_t findPreviousPrime(size_t number);
+	//size_t findNextPrime(size_t number);
+	//bool isPrime (size_t number);
+	//size_t findPreviousPrime(size_t number);
 	
 	bool resize(); // resizing when load factor is > 0.8 or if the load factor < 0.6
 	float calculateLoadFactor();

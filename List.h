@@ -122,6 +122,8 @@ public:
 		}
 		return result;
 	}
+	
+	
 
 private:
 	Node<T>* headNode;

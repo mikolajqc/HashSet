@@ -183,7 +183,7 @@ bool HashTab<T>::resize()
 
 	return true;
 }
-
+/*
 //these method might be better!
 template<class T>
 bool HashTab<T>::isPrime(std::size_t x)
@@ -224,3 +224,4 @@ size_t HashTab<T>::findNextPrime(size_t x)
         i ^= 6;
     return x;
 }
+*/

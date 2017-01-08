@@ -16,7 +16,16 @@ public:
 	float eraseTest();
 	bool createFileStream();
 	bool closeFileStream();
+	
 	bool correctnessTest();
+	
+	bool correctnessInsertTest();
+	bool correctnessEraseTest();
+	bool correctnessFindTest();
+	bool correctnessCleanTest();
+	bool correctnessEmptyTest();
+	bool correctnessGetSizeTest();
+	bool correctnessIteratorTest();
 	
 	Test(size_t K, std::string pathFile)
 	{
