@@ -1,3 +1,6 @@
+//Mikolaj Ciesielski
+//Plik z implementacja klasy List
+
 template <class T>
 List<T>::List()
 {
@@ -49,14 +52,14 @@ bool List<T>::insert(T value)
 }
 
 template <class T>
-int List<T>::erase(T value) //to chyba nam opoznia w chuj usuwanie jezeli sa kolizje czy trzeba uzywac finda?
+int List<T>::erase(T value)
 {
 	std::vector<List<T>::Iterator> iterators;
 	int result = 0;
 	
 	if (!find(value, iterators)) return result;
 	
-	for(unsigned int i = 0; i < iterators.size(); ++i) // you can change it into sth more sophisticated
+	for(unsigned int i = 0; i < iterators.size(); ++i)
 	{
 		result += erase(iterators[i]);
 	}

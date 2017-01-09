@@ -1,3 +1,6 @@
+//Mikolaj Ciesielski
+//Plik z implementacja generatora.
+
 #include "Generator.h"
 #ifdef _WIN32
 #include <Windows.h>
@@ -9,18 +12,21 @@
 int Generator::generateFiles()
 {
 	unsigned long int currentValue = start;
-	//conf.txt
+
 	std::fstream confFile;
+	
 	confFile.open ("Tests/conf.txt", std::ifstream::out);
 	confFile << start << "\n";
 	confFile << step << "\n";
 	confFile << numberOfSteps << "\n";
+	
 	confFile.close();
 	
 	for(unsigned int i = 0; i < numberOfSteps; ++i)
 	{
 		std::fstream fileStream;
 		fileStream.open ("Tests/" + std::to_string(i) + ".txt", std::ifstream::out);
+		
 		unsigned int wordLength = 0;
 		for(unsigned int j = 0; j < currentValue;)
 		{
@@ -34,28 +40,30 @@ int Generator::generateFiles()
 			else
 			{
 				wordLength += 2;
-				if(wordLength>50)
+				if(wordLength>maxLength)
 				{
 					partOfString = "\n";
 					++j;
 					wordLength = 0;
 				}
 			}
+			
 			fileStream << partOfString;
+			
 			if(partOfString == "\n")
 			{
 				while(partOfString == "\n")
 				{
 					partOfString = generatePartOfString();
 				}
+				
 				if(j<currentValue)
-					{
-						fileStream << partOfString;
-						wordLength +=2;
-					}
+				{
+					fileStream << partOfString;
+					wordLength +=2;
+				}
 			}
 		}
-	
 		
 		fileStream.close();
 		currentValue *= step;
@@ -67,6 +75,7 @@ int Generator::generatePairs()
 {
 	bool breakLineWasFound = false;
 	unsigned int breakLinePosition = 0;
+	
 	for(unsigned int i = 0; i < letters.size(); ++i)
 	{
 		for (unsigned int j = i; j < letters.size(); ++j)
@@ -129,13 +138,16 @@ unsigned long mix(unsigned long a, unsigned long b, unsigned long c)
 
 std::string Generator::generatePartOfString()
 {
-#ifdef _WIN32
-	srand(1000);
-#else
-	srand(mix(clock(), time(NULL), getpid()));
-#endif // _Windows
-
+	#ifdef _WIN32
 	
+	srand(1000);
+	
+	#else
+	
+	srand(mix(clock(), time(NULL), getpid()));
+	
+	#endif // _Windows
+
 	unsigned int randomIndex = rand()%vectorToRandom.size();
 	return vectorToRandom[randomIndex];
 }

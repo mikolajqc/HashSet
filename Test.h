@@ -1,3 +1,5 @@
+//Mikolaj Ciesielski
+//Plik klasy Test. Klasy odpowiedzialnej za testowanie tablicy mieszajacej
 
 #ifndef TEST_H
 #define TEST_H
@@ -5,14 +7,13 @@
 #include <iostream>
 #include "HashTab.h"
 #include <ctime>
-#include <boost/unordered_set.hpp>
 #include <fstream>
 
 class Test
 {
 public:
-	bool test();
-	float insertTest(); //these methods return time
+
+	float insertTest();
 	float eraseTest();
 	bool createFileStream();
 	bool closeFileStream();
@@ -27,23 +28,13 @@ public:
 	bool correctnessGetSizeTest();
 	bool correctnessIteratorTest();
 	
-	Test(size_t K, std::string pathFile)
-	{
-		hashTab = new HashTab<std::string>(K);
-		this->pathFile = pathFile;
-	}
-	
-	~Test()
-	{
-		delete hashTab;
-	}
-	
+	Test(size_t K, std::string pathFile);
+	~Test();
 	
 private:
 	HashTab<std::string>* hashTab;
 	std::fstream fileStream;
 	std::string pathFile;
-	
 };
 
 #endif

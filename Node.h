@@ -1,3 +1,6 @@
+//Mikolaj Ciesielski
+//Plik klasy Node - reprezentujacej wezel listy
+
 #ifndef NODE_H
 #define NODE_H
 
@@ -25,4 +28,4 @@ private:
 
 #include "Node.hpp"
 
-#endif /* NODE_H */
+#endif /* NODE_H */ 

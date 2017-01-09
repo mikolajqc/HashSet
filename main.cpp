@@ -1,4 +1,6 @@
-//Plik main.cpp projektu z przedmiotu AAL. Autor: Mikolaj Ciesielski
+//Mikolaj Ciesielski
+//Plik main.cpp
+
 #include <iostream>
 #include "HashTab.h"
 #include <ctime>
@@ -8,7 +10,6 @@
 #include <cstdlib>
 
 using namespace std;
-
   
 int fileMode()
 {
@@ -57,7 +58,7 @@ bool getConfiguration(std::vector<unsigned int>& result)
 
 int generateMode(int argc, char * argv[])
 {
-	printf("Time test mode!\n.");
+	printf("Time test mode!\n");
 	size_t K;
 	cout << "Enter maximal number of ceils in hash table:";
 	cin >> K;
@@ -65,31 +66,64 @@ int generateMode(int argc, char * argv[])
 	if(argc == 3 && *(argv[2] + 1) == 'f')
 	{
 		cout << "Enter first number of strings: ";
-		unsigned int firstSize, numberOfTests;
+		unsigned int firstSize, numberOfTests, maxLength, multiplier;
 		cin >> firstSize;
-		cout << "Enter first number of tests: ";
+		cout << "Enter number of tests: ";
 		cin >> numberOfTests;
+		cout << "Enter multipliers: ";
+		cin >> multiplier;
+		cout << "Enter maxLength of word: ";
+		cin >> maxLength;
 		
-		Generator gen(firstSize,2,numberOfTests);
+		Generator gen(firstSize,multiplier,numberOfTests, maxLength);
 		
 		gen.generatePairs();
 		gen.generateVectorToRandom();
 		cout << "Files generating..." << endl;
 		gen.generateFiles();
 	}
-	cout <<"Time testing: \n";
-	cout << "Number of strings:\tInsert time:\t\tErase time:\n";
 	
+	
+	cout <<"Time testing: \n";
+
 	std::vector<unsigned int> conf;
 	if(getConfiguration(conf) == false) return 0;
+	
+	
+	std::vector<float>insertResults, eraseResults, qResult;
 	
 	for(unsigned int i = 0; i < conf[2]; ++i)
 	{
 		Test test(K,"Tests/" + std::to_string(i) + ".txt");
-		cout << conf[0] << " * 2^" << i << " strings \t";
-		cout  << "Insert" << test.insertTest() << "s\t\t";
-		cout  << "Erase" << test.eraseTest() <<  "s" <<endl;
+		insertResults.push_back(test.insertTest());
+		eraseResults.push_back(test.eraseTest());
 	}
+	
+	int median = insertResults.size()/2;
+	unsigned int NMedian = pow(conf[1],median) * 1000;
+	
+	cout <<"\n";
+	cout << "Insert test:\n";
+	cout << "Number of strings:\tInsert time:\t\tq:\n";
+	
+	for(unsigned int i = 0; i < conf[2]; ++i)
+	{
+		unsigned int N = pow(conf[1],i) * 1000;
+		cout << conf[0] << " * " << conf[1]<<"^" << i << " strings \t";
+		printf("Insert:\t%.6fs\t%.6f\n", insertResults[i], (insertResults[i] * NMedian) / (insertResults[median] * N));
+	}
+	
+	cout << "\n";
+	cout << "Erase test:\n";
+	cout << "Number of strings:\tInsert time:\t\tq:\n";
+	
+	for(unsigned int i = 0; i < conf[2]; ++i)
+	{
+		unsigned int N = pow(conf[1],i) * 1000;
+		cout << conf[0] << " * " << conf[1]<<"^" << i << " strings \t";
+		printf("Erase:\t%.6fs\t%.6f\n", eraseResults[i], (eraseResults[i] * NMedian) / (eraseResults[median] * N));
+	}
+
 	return 0;
 }
 

@@ -1,3 +1,6 @@
+//Mikolaj Ciesielski
+//Plik z klasa HashTab - klasa reprezentujaca tablice mieszajaca
+
 #ifndef HASHTAB_H
 #define HASHTAB_H
 
@@ -12,18 +15,16 @@ public:
 	HashTab(size_t K); // K - max number of ceils in vector
 	~HashTab();
 	
-	bool init(size_t sizeToReserve); //czy init wogle jest konieczny? czy reserve tego nie
-									 //zalatwia czy nie mozna tworzyc listy tylko gdy zajety?
+	bool init(size_t sizeToReserve);
 	
 	bool insert(T value, bool withResize = true);
 	bool erase(T value);
 	bool clean();
 	bool empty();
 	
-	size_t getSize(); //number of elements
+	//number of elements
+	size_t getSize(); 
 
-	
-	//iterator w ogole w tym wypadku jest konieczny?
 	class Iterator: public std::iterator<std::forward_iterator_tag, T>
 	{
 		friend class HashTab;
@@ -104,8 +105,9 @@ public:
 	typename HashTab<T>::Iterator operator[] (int index);
 	
 	Iterator begin()
-	{	
-		if(empty()) return Iterator((*hashTable)[0]->begin(), 0, this); //to nie ma sensu
+	{
+		if(empty()) return Iterator((*hashTable)[0]->begin(), 0, this);
+		
 		unsigned int i = 0;
 		for(; i < hashTable->size() && (*hashTable)[i]->empty(); ++i);
 		return Iterator((*hashTable)[i]->begin(), i, this);
@@ -113,7 +115,7 @@ public:
 	
 	Iterator end()
 	{
-		if(empty()) return Iterator((*hashTable)[0]->begin(), 0, this); //to nie ma sensu
+		if(empty()) return Iterator((*hashTable)[0]->begin(), 0, this);
 		return Iterator((*hashTable)[hashTable->size() -1]->end(), (hashTable->size() -1), this);
 	}
 
@@ -146,11 +148,7 @@ private:
 	unsigned int hashFunction(T value); // FNV-1a
 	size_t size;
 	
-	//size_t findNextPrime(size_t number);
-	//bool isPrime (size_t number);
-	//size_t findPreviousPrime(size_t number);
-	
-	bool resize(); // resizing when load factor is > 0.8 or if the load factor < 0.6
+	bool resize();
 	float calculateLoadFactor();
 };
 

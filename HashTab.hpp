@@ -1,4 +1,7 @@
-#define TYPICALMINNUMBEROFCEILS 32
+//Mikolaj Ciesielski
+//Plik z implementacja klasy HashTab
+
+#define TYPICALMINNUMBEROFCEILS 32 //It is initial number of ceils. When K<32 then initial number is K.
 #define MAXLOADFACTOR 0.8
 #define MINLOADFACTOR 0.2
 
@@ -45,21 +48,22 @@ unsigned int HashTab<T>::hashFunction(T value)
 		hash = hash ^ static_cast<int>(value[i]);
 		hash = hash * 16777619;
 	}
-	hash%=hashTable->size();
-	//hash = 0; //to delete
+	
+	hash%=hashTable->size(); 
 	return hash;
 }
 
 template <class T>
 bool HashTab<T>::init(size_t sizeToReserve)
 {
-	hashTable->reserve(sizeToReserve); // not k ?
+	hashTable->reserve(sizeToReserve);
 	
 	for(unsigned int i = 0; i < sizeToReserve; ++i)
 	{
 		List<T>* tempList = new List<T>;
 		hashTable->push_back(tempList);
 	}
+	
 	size = 0;
 	return true;
 }
@@ -95,7 +99,7 @@ bool HashTab<T>::clean()
 {
 	for(unsigned int i = 0; i < hashTable->size(); ++i)
 	{
-		(*hashTable)[i]->clean(); //we cant do delete, cause we might to insert sth in the future
+		(*hashTable)[i]->clean();
 	}
 	size = 0;
 	return true;
@@ -117,20 +121,7 @@ float HashTab<T>::calculateLoadFactor()
 template <class T>
 size_t HashTab<T>::getSize()
 {
-/*
-	//Debug version:
-	size_t result = 0;
-	for(unsigned int i = 0; i < hashTable->size(); ++i)
-	{
-		result += (*hashTable)[i]->getSize();
-	}
-	
-	return result;
-*/
-
-	//Release version:
 	return size;
-
 }
 
 template <class T>
@@ -143,85 +134,37 @@ template <class T>
 bool HashTab<T>::resize()
 {
 	float loadFactor = calculateLoadFactor();
-	float newNumberOfCeils;
+	size_t newNumberOfCeils;
 	size_t hashTableSize = hashTable->size();
 
 	if(loadFactor > MAXLOADFACTOR && (hashTableSize >= TYPICALMINNUMBEROFCEILS) && (hashTableSize!= MAXNUMBEROFCEILS))
 	{
-		//newNumberOfCeils = findNextPrime(hashTableSize*2);
 		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize)+1)));
-		
-		
 		if(newNumberOfCeils > MAXNUMBEROFCEILS) newNumberOfCeils = MAXNUMBEROFCEILS;
 	}
-	else if(loadFactor < MINLOADFACTOR && (hashTableSize > TYPICALMINNUMBEROFCEILS) /*&& (TYPICALMINNUMBEROFCEILS!= MAXNUMBEROFCEILS)*/)
+	else if(loadFactor < MINLOADFACTOR && (hashTableSize > TYPICALMINNUMBEROFCEILS) )
 	{
 		newNumberOfCeils = pow (2,(static_cast<int> (log2(hashTableSize - 1))));
-		//newNumberOfCeils = findNextPrime(hashTableSize/2);
 	}
 	else
 	{
 		return false;
 	}
-	//std::cout << newNumberOfCeils << " ";
+
 	std::vector<List<T>* >* oldHashTable = hashTable;
 	hashTable = new std::vector<List<T>* >;
 
-	init(newNumberOfCeils); ///tutaj robi sie 2 razy ! po co wypelnaic od razu??
-	for(unsigned int i = 0; i < hashTableSize; ++i)  //hashTableSize is old size 
+	init(newNumberOfCeils); 
+
+	for(unsigned int i = 0; i < hashTableSize; ++i)  //hashTableSize is oldHashTable size
 	{
 		for(typename List<T>::Iterator lI = (*oldHashTable)[i]->begin(); lI != (*oldHashTable)[i]->end(); ++lI)
 		{
-			insert(*lI, false);
+			insert(*lI, false); 
 		}
 		delete (*oldHashTable)[i];
 	}
-	
-	
 
 	delete oldHashTable;
-
 	return true;
 }
-/*
-//these method might be better!
-template<class T>
-bool HashTab<T>::isPrime(std::size_t x)
-{
-    std::size_t o = 4;
-    for (std::size_t i = 5; true; i += o)
-    {
-        std::size_t q = x / i;
-        if (q < i)
-            return true;
-        if (x == q * i)
-            return false;
-        o ^= 6;
-    }
-    return true;
-}
-
-template <class T>
-size_t HashTab<T>::findNextPrime(size_t x)
-{
-    switch (x)
-    {
-    case 0:
-    case 1:
-    case 2:
-        return 2;
-    case 3:
-        return 3;
-    case 4:
-    case 5:
-        return 5;
-    }
-    std::size_t k = x / 6;
-    std::size_t i = x - 6 * k;
-    std::size_t o = i < 2 ? 1 : 5;
-    x = 6 * k + o;
-    for (i = (3 + o) / 2; !isPrime(x); x += i)
-        i ^= 6;
-    return x;
-}
-*/
