@@ -1,5 +1,3 @@
-//Mikolaj Ciesielski
-//Plik z klasa HashTab - klasa reprezentujaca tablice mieszajaca
 
 #ifndef HASHTAB_H
 #define HASHTAB_H

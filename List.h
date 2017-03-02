@@ -1,6 +1,3 @@
-//Mikolaj Ciesielski
-//Plik klasy List - klasy reprezentujacej Liste dwukierunkowa
-
 #ifndef LIST_H
 #define LIST_H
 

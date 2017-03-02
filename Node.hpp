@@ -1,5 +1,3 @@
-//Mikolaj Ciesielski
-//Plik z implementacja klasy Node
 
 template <class T> 
 Node<T>::Node()

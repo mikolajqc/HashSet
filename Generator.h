@@ -1,6 +1,3 @@
-//Mikolaj Ciesielski
-//Generator napisow (danych testowych)
-
 #ifndef GENERATOR_H
 #define GENERATOR_H
 

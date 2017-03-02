@@ -1,6 +1,3 @@
-//Mikolaj Ciesielski
-//Plik main.cpp
-
 #include <iostream>
 #include "HashTab.h"
 #include <ctime>

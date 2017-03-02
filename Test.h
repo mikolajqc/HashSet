@@ -1,5 +1,3 @@
-//Mikolaj Ciesielski
-//Plik klasy Test. Klasy odpowiedzialnej za testowanie tablicy mieszajacej
 
 #ifndef TEST_H
 #define TEST_H

@@ -1,6 +1,3 @@
-//Mikolaj Ciesielski
-//Plik z implementacja generatora.
-
 #include "Generator.h"
 #ifdef _WIN32
 #include <Windows.h>

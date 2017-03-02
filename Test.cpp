@@ -1,6 +1,3 @@
-//Mikolaj Ciesielski
-//Plik z implementacja klasy Test.
-
 #include "Test.h"
 
 Test::Test(size_t K, std::string pathFile)

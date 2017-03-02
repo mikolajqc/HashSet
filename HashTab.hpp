@@ -1,6 +1,3 @@
-//Mikolaj Ciesielski
-//Plik z implementacja klasy HashTab
-
 #define TYPICALMINNUMBEROFCEILS 32 //It is initial number of ceils. When K<32 then initial number is K.
 #define MAXLOADFACTOR 0.8
 #define MINLOADFACTOR 0.2

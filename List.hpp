@@ -1,5 +1,3 @@
-//Mikolaj Ciesielski
-//Plik z implementacja klasy List
 
 template <class T>
 List<T>::List()
