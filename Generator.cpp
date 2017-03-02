@@ -4,6 +4,9 @@
 #include "Generator.h"
 #ifdef _WIN32
 #include <Windows.h>
+#include <ctime>
+#include <process.h>
+
 #else
 #include <unistd.h>
 #endif
@@ -14,8 +17,23 @@ int Generator::generateFiles()
 	unsigned long int currentValue = start;
 
 	std::fstream confFile;
+
 	
-	confFile.open ("Tests/conf.txt", std::ifstream::out);
+	#ifdef _WIN32
+	std::string slash = "\\";
+	#else
+	std::string slash = "/";
+	#endif
+
+	confFile.open ("Tests" + slash +"conf.txt", std::ifstream::out);
+	
+	if(confFile.is_open() == false)
+	{
+		system("mkdir \"Tests\"");
+		confFile.open ("Tests" + slash +"conf.txt", std::ifstream::out);
+	}
+	
+
 	confFile << start << "\n";
 	confFile << step << "\n";
 	confFile << numberOfSteps << "\n";
@@ -25,7 +43,7 @@ int Generator::generateFiles()
 	for(unsigned int i = 0; i < numberOfSteps; ++i)
 	{
 		std::fstream fileStream;
-		fileStream.open ("Tests/" + std::to_string(i) + ".txt", std::ifstream::out);
+		fileStream.open ("Tests"+ slash + std::to_string(i) + ".txt", std::ifstream::out);
 		
 		unsigned int wordLength = 0;
 		for(unsigned int j = 0; j < currentValue;)
@@ -140,7 +158,7 @@ std::string Generator::generatePartOfString()
 {
 	#ifdef _WIN32
 	
-	srand(1000);
+	srand(mix(clock(), time(NULL), _getpid()));
 	
 	#else
 	

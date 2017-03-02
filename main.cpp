@@ -35,8 +35,13 @@ int fileMode()
 
 bool getConfiguration(std::vector<unsigned int>& result)
 {
+	#ifdef _WIN32
+	std::string slash = "\\";
+	#else
+	std::string slash = "/";
+	#endif
 	std::fstream confFile;
-	confFile.open ("Tests/conf.txt", std::ifstream::in);
+	confFile.open ("Tests" + slash + "conf.txt", std::ifstream::in);
 	if(confFile.is_open() == false)
 	{
 		printf("Error: File: \"conf.txt\" doesnt exist!\n");
@@ -92,9 +97,15 @@ int generateMode(int argc, char * argv[])
 	
 	std::vector<float>insertResults, eraseResults, qResult;
 	
+	#ifdef _WIN32
+	std::string slash = "\\";
+	#else
+	std::string slash = "/";
+	#endif
+	
 	for(unsigned int i = 0; i < conf[2]; ++i)
 	{
-		Test test(K,"Tests/" + std::to_string(i) + ".txt");
+		Test test(K,"Tests" + slash + std::to_string(i) + ".txt");
 		insertResults.push_back(test.insertTest());
 		eraseResults.push_back(test.eraseTest());
 	}

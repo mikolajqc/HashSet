@@ -2,7 +2,6 @@
 //Plik z implementacja klasy Test.
 
 #include "Test.h"
-#include <unordered_set>
 
 Test::Test(size_t K, std::string pathFile)
 {
@@ -43,7 +42,7 @@ float Test::insertTest()
 
 float Test::eraseTest()
 {
-	float result;
+	float result = 0;
 	
 	if(createFileStream())
 	{
